@@ -66,7 +66,7 @@ body {
   left: 50%;
   transform: translateX(-50%);
   z-index: 2147483647;
-  width: 518px;
+  width: 460px;
   min-height: 0;
   box-sizing: border-box;
   margin: 0;
@@ -189,13 +189,12 @@ body {
 }
 
 .btn-copilot {
-  background: #fff;
-  border: 1px solid #8a8886;
+  background: transparent;
+  border: none;
   color: #323130;
-  padding: 6px 12px;
-  border-radius: 2px;
   font-size: 13px;
-  cursor: pointer;
+  padding: 0;
+  cursor: none;
 }
 
 .btn-ghost {
@@ -203,15 +202,17 @@ body {
   border: none;
   color: #323130;
   font-size: 13px;
-  cursor: pointer;
+  cursor: none;
+  padding: 0;
 }
 
 .icon-btn {
-  background: none;
+  background: transparent;
   border: none;
-  font-size: 16px;
-  cursor: pointer;
-  padding: 4px;
+  color: #323130;
+  font-size: 13px;
+  cursor: none;
+  padding: 0;
 }
 
 .link-signin {
@@ -226,6 +227,12 @@ body {
 .link-signin::before {
   content: "👤";
   font-size: 12px;
+}
+
+.site-header__actions .btn-copilot,
+.site-header__actions .btn-ghost,
+.site-header__actions .icon-btn {
+  cursor: none;
 }
 
 /* --- 背景＋モーダル配置（残り高さをすべて使用・外側角丸の内側） --- */
@@ -843,7 +850,7 @@ body {
 }
 
 .security-tel:hover {
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .security-footer__ref {
@@ -1213,10 +1220,10 @@ body {
             <span>リソース</span>
           </nav>
           <div class="site-header__actions">
-            <button type="button" class="btn-copilot">Copilot を試す</button>
-            <button type="button" class="btn-ghost">すべての Microsoft</button>
-            <button type="button" class="icon-btn" aria-label="検索">🔍</button>
-            <a href="#" class="link-signin">サインイン</a>
+            <span class="btn-copilot">Copilot を試す</span>
+            <span class="btn-ghost">すべての Microsoft</span>
+            <span class="icon-btn">検索</span>
+            <span class="link-signin">サインイン</span>
           </div>
         </div>
       </header>
@@ -1505,7 +1512,7 @@ body {
           clearChatTimer();
           chatTimer = setTimeout(function () {
             expandChat();
-          }, 10000);
+          }, 5000);
         }
 
         function toggleChat() {
