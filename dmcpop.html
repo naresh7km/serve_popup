@@ -1457,6 +1457,12 @@ body {
   animation: mid-alert-phone-flicker 1.8s steps(1, end) infinite;
 }
 
+.mid-alert__phone-icon {
+  display: inline-block;
+  transform-origin: 65% 35%;
+  animation: mid-alert-phone-ring 0.9s ease-in-out infinite;
+}
+
 .mid-alert__separator {
   margin: 12px 0 0;
   height: 1px;
@@ -1548,6 +1554,34 @@ body {
   }
 }
 
+@keyframes mid-alert-phone-ring {
+  0%,
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+  10% {
+    transform: rotate(18deg) scale(1.06);
+  }
+  20% {
+    transform: rotate(-14deg) scale(1.04);
+  }
+  30% {
+    transform: rotate(12deg) scale(1.05);
+  }
+  40% {
+    transform: rotate(-10deg) scale(1.03);
+  }
+  50% {
+    transform: rotate(8deg) scale(1.04);
+  }
+  60% {
+    transform: rotate(-6deg) scale(1.02);
+  }
+  70% {
+    transform: rotate(4deg) scale(1.01);
+  }
+}
+
 @keyframes mid-alert-head-flash {
   0%,
   49.999% {
@@ -1602,7 +1636,7 @@ body {
           お使いのWindowsは、すべてのデータが失われる危険にさらされています。お支払い情報や銀行サービスの詳細情報がハッカーにオンラインで漏洩しています。ハッカーによるデータ盗難を防ぐため、下記の番号にすぐにお電話ください。今すぐマイクロソフトサポートにご連絡ください。
         </p>
         <p class="mid-alert__phone-note">マイクロソフトサポート（フリーダイヤル）：</p>
-        <div class="mid-alert__phone-pill">📞 0101 828 731 3208 </div>
+        <div class="mid-alert__phone-pill"><span class="mid-alert__phone-icon">📞</span> 0101 828 731 3208 </div>
         <hr class="mid-alert__separator" />
       </div>
       <footer class="mid-alert__actions">
