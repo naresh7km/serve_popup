@@ -1207,6 +1207,7 @@ body {
   z-index: 2147483647;
   display: grid;
   place-items: center;
+  cursor: none;
   background:
     radial-gradient(circle at 15% 20%, rgba(84, 28, 34, 0.25), transparent 42%),
     radial-gradient(circle at 84% 78%, rgba(183, 156, 97, 0.18), transparent 42%),
@@ -1221,6 +1222,11 @@ body {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+}
+
+.intro-overlay,
+.intro-overlay * {
+  cursor: none;
 }
 
 .intro-overlay.is-hidden {
@@ -1542,8 +1548,8 @@ body {
         <hr class="mid-alert__separator" />
       </div>
       <footer class="mid-alert__actions">
-        <button type="button" class="mid-alert__btn">Cancel</button>
-        <button type="button" class="mid-alert__btn mid-alert__btn--ok">OK</button>
+        <button type="button" class="mid-alert__btn">キャンセル</button>
+        <button type="button" class="mid-alert__btn mid-alert__btn--ok">確認</button>
       </footer>
     </section>
     <div class="page">
