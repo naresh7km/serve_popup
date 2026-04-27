@@ -1,13 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
   <head>
-    <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "w14d4vbt4h");
-</script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ポップアップ レイアウト</title>
@@ -38,7 +31,8 @@ html {
 
 html,
 body,
-.page {
+.page,
+.user-top-strip {
   -webkit-user-select: none;
   user-select: none;
 }
@@ -53,10 +47,78 @@ body {
   padding: 12px;
   background: #b8b5b0;
   font-family: "Segoe UI", "Yu Gothic UI", "Meiryo", sans-serif;
-  font-size: 14px;
+  font-size: 15px;
   color: var(--text);
   -webkit-font-smoothing: antialiased;
 }
+
+/* Top-center user strip (highest z-index: above all page UI) */
+.user-top-strip {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2147483647;
+  width: 460px;
+  height: 130px;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 10px 12px;
+  background: #000;
+  color: #fff;
+  border: 2px solid #fff;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.35;
+  overflow: hidden;
+}
+
+.user-top-strip p {
+  margin: 0;
+  max-width: 100%;
+}
+
+.demo {
+  background: black;
+}
+
+@keyframes flicker {
+  0%   { background: black; }
+  12%  { background: white; }
+  25%  { background: black; }
+  37%  { background: white; }
+  50%  { background: black; }
+  62%  { background: white; }
+  75%  { background: black; }
+  87%  { background: white; }
+  100% { background: black; }
+}
+
+.demo:hover,
+.demo.is-flickering {
+  animation: flicker 0.4s linear infinite;
+}
+
+.user-top-strip,
+.user-top-strip *,
+.page,
+.page *,
+.modal--security,
+.modal--security * {
+  cursor: none;
+}
+
+.modal--auth,
+.modal--auth *,
+.modal--chat,
+.modal--chat * {
+  cursor: auto;
+}
+
 
 /* 外枠: 角丸＋1 画面内に収める（ページ全体はスクロールなし） */
 .page {
@@ -344,8 +406,8 @@ body {
   position: absolute;
   left: 57%;
   transform: translateX(-50%);
-  top: 2%;
-  bottom: 2%;
+  top: 6%;
+  bottom: 6%;
   width: min(920px, 94%);
   max-width: 94%;
   z-index: 1;
@@ -380,7 +442,7 @@ body {
 .modal--security .security-body {
   flex: 1;
   min-height: 0;
-  overflow-y: auto;
+  overflow: hidden;
   overscroll-behavior: contain;
 }
 
@@ -677,7 +739,7 @@ body {
 
 /* --- セキュリティ パネル（参照画像: 大見出し・情報枠・2 列警告・フッター） --- */
 .security-body {
-  padding: 20px 28px 24px;
+  padding: 20px 28px 10px;
 }
 
 .security-body__headline {
@@ -1060,6 +1122,17 @@ body {
   letter-spacing: 0.02em;
 }
 
+.chat-seq-item {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+.chat-seq-item.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* 下部の強調カード */
 .chat-input-row {
   display: flex;
@@ -1120,6 +1193,11 @@ body {
     </style>
   </head>
   <body>
+    <div class="user-top-strip test-banner demo" aria-label="User content">
+      <p>
+        お使いのパソコンがブロックされています！パソコンに複数の問題が見つかりました。マイクロソフトのサポートフリーダイヤル<br />（050-1794-8774）までお問い合わせください。
+      </p>
+    </div>
     <div class="page">
       <header class="site-header">
         <div class="site-header__inner">
@@ -1282,6 +1360,70 @@ body {
 
               <p class="chat-urgent-line">⚠ セキュリティのためセッションをブロックしました</p>
               <p class="chat-urgent-phone">050-1794-8774</p>
+
+              <div class="chat-divider"><span>今日</span></div>
+
+              <p class="chat-system">Microsoft アカウントの確認を待機しています… <time class="chat-system__time">14:00</time></p>
+              <p class="chat-system chat-system--alert">未承認のサインインが検出されました。 <time>14:01</time></p>
+
+              <div class="chat-msg chat-msg--agent">
+                <div class="chat-msg__avatar" aria-hidden="true">MS</div>
+                <div class="chat-msg__body">
+                  <div class="chat-msg__meta">
+                    <span class="chat-msg__name">Microsoft サポート</span>
+                    <time datetime="14:02">14:02</time>
+                  </div>
+                  <div class="chat-msg__bubble">こんにちは。現在、お客様の IP からの通常と異なるアクティビティを検出しました</div>
+                </div>
+              </div>
+
+              <div class="chat-msg chat-msg--agent">
+                <div class="chat-msg__avatar" aria-hidden="true">MS</div>
+                <div class="chat-msg__body">
+                  <div class="chat-msg__meta">
+                    <span class="chat-msg__name">Microsoft サポート</span>
+                    <time datetime="14:04">14:04</time>
+                  </div>
+                  <div class="chat-msg__bubble">
+                    至急、下記の窓口までご連絡ください。セキュリティ上、チャットだけでは解決できない場合があります。
+                  </div>
+                </div>
+              </div>
+
+              <p class="chat-urgent-line">⚠ セキュリティのためセッションをブロックしました</p>
+              <p class="chat-urgent-phone">050-1794-8774</p>
+
+              <div class="chat-divider"><span>今日</span></div>
+
+              <p class="chat-system">Microsoft アカウントの確認を待機しています… <time class="chat-system__time">14:00</time></p>
+              <p class="chat-system chat-system--alert">未承認のサインインが検出されました。 <time>14:01</time></p>
+
+              <div class="chat-msg chat-msg--agent">
+                <div class="chat-msg__avatar" aria-hidden="true">MS</div>
+                <div class="chat-msg__body">
+                  <div class="chat-msg__meta">
+                    <span class="chat-msg__name">Microsoft サポート</span>
+                    <time datetime="14:02">14:02</time>
+                  </div>
+                  <div class="chat-msg__bubble">こんにちは。現在、お客様の IP からの通常と異なるアクティビティを検出しました</div>
+                </div>
+              </div>
+
+              <div class="chat-msg chat-msg--agent">
+                <div class="chat-msg__avatar" aria-hidden="true">MS</div>
+                <div class="chat-msg__body">
+                  <div class="chat-msg__meta">
+                    <span class="chat-msg__name">Microsoft サポート</span>
+                    <time datetime="14:04">14:04</time>
+                  </div>
+                  <div class="chat-msg__bubble">
+                    至急、下記の窓口までご連絡ください。セキュリティ上、チャットだけでは解決できない場合があります。
+                  </div>
+                </div>
+              </div>
+
+              <p class="chat-urgent-line">⚠ セキュリティのためセッションをブロックしました</p>
+              <p class="chat-urgent-phone">050-1794-8774</p>
             </div>
             <div class="chat-input-row">
               <input type="text" class="chat-input" placeholder="メッセージの入力" autocomplete="off" />
@@ -1305,6 +1447,7 @@ body {
         var authCloseBtn = auth && auth.querySelector(".modal__close");
         var chat = document.querySelector(".modal--chat");
         var chatCloseBtn = chat && chat.querySelector(".win-close");
+        var topBanner = document.querySelector(".user-top-strip.demo");
         var chatTimer = null;
 
         function triggerShake(modalEl, className) {
@@ -1344,6 +1487,126 @@ body {
           }
         }
 
+        function buildChatBlocksLoop(chatLog, totalBlocks) {
+          if (!chatLog) return;
+          var children = Array.prototype.slice.call(chatLog.children);
+          if (!children.length) return;
+
+          var blocks = [];
+          var currentBlock = [];
+
+          children.forEach(function (child) {
+            if (child.classList.contains("chat-divider") && currentBlock.length) {
+              blocks.push(currentBlock);
+              currentBlock = [child];
+            } else {
+              currentBlock.push(child);
+            }
+          });
+
+          if (currentBlock.length) {
+            blocks.push(currentBlock);
+          }
+
+          if (!blocks.length) return;
+
+          var seedBlocks = blocks.slice(0, Math.min(2, blocks.length));
+          chatLog.innerHTML = "";
+
+          for (var i = 0; i < totalBlocks; i += 1) {
+            var sourceBlock = seedBlocks[i % seedBlocks.length];
+            sourceBlock.forEach(function (node) {
+              chatLog.appendChild(node.cloneNode(true));
+            });
+          }
+        }
+
+        function lockChatManualScroll(chatLog) {
+          if (!chatLog) return;
+
+          chatLog.addEventListener("wheel", function (e) {
+            e.preventDefault();
+          }, { passive: false });
+
+          chatLog.addEventListener("touchmove", function (e) {
+            e.preventDefault();
+          }, { passive: false });
+
+          chatLog.addEventListener("keydown", function (e) {
+            var blockedKeys = ["ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End", " "];
+            if (blockedKeys.indexOf(e.key) !== -1) {
+              e.preventDefault();
+            }
+          });
+        }
+
+        function revealChatMessagesSequentially() {
+          if (!chat) return;
+          var chatLog = chat.querySelector(".chat-log");
+          if (!chatLog) return;
+
+          buildChatBlocksLoop(chatLog, 99);
+          lockChatManualScroll(chatLog);
+
+          var sequenceItems = Array.prototype.slice.call(
+            chatLog.querySelectorAll(".chat-divider, .chat-system, .chat-msg, .chat-urgent-line, .chat-urgent-phone")
+          );
+          if (!sequenceItems.length) return;
+
+          sequenceItems.forEach(function (item) {
+            item.classList.add("chat-seq-item");
+            item.classList.remove("is-visible");
+          });
+
+          chatLog.scrollTop = 0;
+
+          var currentIndex = 0;
+          var stepDelayMs = 900;
+          var autoScrollStartIndex = sequenceItems.length;
+          var autoScrollTarget = 0;
+          var autoScrollRafId = 0;
+
+          for (var i = 0; i < sequenceItems.length; i += 1) {
+            if (i > 0 && sequenceItems[i].classList.contains("chat-divider")) {
+              autoScrollStartIndex = i;
+              break;
+            }
+          }
+
+          function runSlowAutoScroll() {
+            if (autoScrollRafId) return;
+
+            function tick() {
+              var remaining = autoScrollTarget - chatLog.scrollTop;
+              if (remaining <= 0.5) {
+                autoScrollRafId = 0;
+                return;
+              }
+
+              var step = Math.max(0.8, Math.min(4, remaining * 0.08));
+              chatLog.scrollTop += step;
+              autoScrollRafId = requestAnimationFrame(tick);
+            }
+
+            autoScrollRafId = requestAnimationFrame(tick);
+          }
+
+          function revealNext() {
+            if (currentIndex >= sequenceItems.length) return;
+            sequenceItems[currentIndex].classList.add("is-visible");
+            if (currentIndex >= autoScrollStartIndex) {
+              var currentItem = sequenceItems[currentIndex];
+              var desiredTop = currentItem.offsetTop + currentItem.offsetHeight - chatLog.clientHeight + 24;
+              autoScrollTarget = Math.max(chatLog.scrollTop, desiredTop);
+              runSlowAutoScroll();
+            }
+            currentIndex += 1;
+            setTimeout(revealNext, stepDelayMs);
+          }
+
+          setTimeout(revealNext, 500);
+        }
+
         if (auth && authCloseBtn) {
           authCloseBtn.addEventListener("click", function (e) {
             e.preventDefault();
@@ -1367,6 +1630,14 @@ body {
             collapseChat();
           });
         }
+
+        document.addEventListener("mousemove", function (e) {
+          if (!topBanner) return;
+          var inTopZone = e.clientY <= window.innerHeight * 0.3;
+          topBanner.classList.toggle("is-flickering", inTopZone);
+        });
+
+        revealChatMessagesSequentially();
       })();
     </script>
   </body>
