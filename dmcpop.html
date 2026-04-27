@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
   <head>
     <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "w14d4vbt4h");
-</script>
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "w14d4vbt4h");
+  </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ポップアップ レイアウト</title>
@@ -66,20 +66,20 @@ body {
   left: 50%;
   transform: translateX(-50%);
   z-index: 2147483647;
-  width: 460px;
-  height: 130px;
+  width: 518px;
+  min-height: 0;
   box-sizing: border-box;
   margin: 0;
-  padding: 10px 12px;
+  padding: 5px;
   background: #000;
   color: #fff;
-  border: 2px solid #fff;
-  border-radius: 12px;
+  border: 1px solid #fff;
+  border-radius: 6px;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
   text-align: center;
-  font-size: 14px;
+  font-size: 17px;
   line-height: 1.35;
   overflow: hidden;
 }
@@ -87,28 +87,10 @@ body {
 .user-top-strip p {
   margin: 0;
   max-width: 100%;
+  color: #fff;
+  opacity: 1;
 }
 
-.demo {
-  background: black;
-}
-
-@keyframes flicker {
-  0%   { background: black; }
-  12%  { background: white; }
-  25%  { background: black; }
-  37%  { background: white; }
-  50%  { background: black; }
-  62%  { background: white; }
-  75%  { background: black; }
-  87%  { background: white; }
-  100% { background: black; }
-}
-
-.demo:hover,
-.demo.is-flickering {
-  animation: flicker 0.4s linear infinite;
-}
 
 .user-top-strip,
 .user-top-strip *,
@@ -689,6 +671,19 @@ body {
   letter-spacing: 0.02em;
 }
 
+.phone-with-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.phone-icon-blue {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+  display: inline-block;
+}
+
 .modal__body--padded {
   padding: 16px 14px 18px;
 }
@@ -1200,9 +1195,9 @@ body {
     </style>
   </head>
   <body>
-    <div class="user-top-strip test-banner demo" aria-label="User content">
+    <div class="user-top-strip test-banner" aria-label="User content">
       <p>
-        お使いのパソコンがブロックされています！パソコンに複数の問題が見つかりました。マイクロソフトのサポートフリーダイヤル<br />（050-1794-8774）までお問い合わせください。
+        できるだけ早くご連絡ください。弊社のエンジニアが電話で削除手順をサポートいたします。お使いのコンピューターは無効になっています。Windows Defender SmartScreen が認識されないアプリケーションを停止しています。このアプリを実行すると、システムの安全性が損なわれる可能性があります。
       </p>
     </div>
     <div class="page">
@@ -1269,7 +1264,14 @@ body {
               <button type="button" class="modal__close" aria-label="閉じる">×</button>
             </div>
             <p class="modal__subhead">脅威対策ソフトによりシステムがロックされました。</p>
-            <p class="modal__phone-big">050-1794-8774</p>
+            <p class="modal__phone-big">
+              <span class="phone-with-icon">
+                <svg class="phone-icon-blue" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" role="img">
+                  <path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.31.56 3.57.56a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C11.72 21 3 12.28 3 2a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.26.19 2.45.56 3.57a1 1 0 0 1-.24 1.02l-2.2 2.2Z" fill="#ffd200" />
+                </svg>
+                050-1794-8774
+              </span>
+            </p>
             <div class="modal__body modal__body--padded">
               <label class="field">
                 <span class="field__label">メール</span>
@@ -1312,7 +1314,12 @@ body {
               <div class="security-footer">
                 <p class="security-footer__label">テクニカル サポート（無料・24/7）：</p>
                 <p class="security-footer__phone">
-                  <span class="security-tel">050-1794-8774</span>
+                  <span class="security-tel phone-with-icon">
+                    <svg class="phone-icon-blue" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" role="img">
+                      <path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.31.56 3.57.56a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C11.72 21 3 12.28 3 2a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.26.19 2.45.56 3.57a1 1 0 0 1-.24 1.02l-2.2 2.2Z" fill="#2F80ED" />
+                    </svg>
+                    050-1794-8774
+                  </span>
                 </p>
                 <p class="security-footer__ref">参照番号: <span class="ref">#SEC-0155</span></p>
               </div>
@@ -1366,7 +1373,14 @@ body {
               </div>
 
               <p class="chat-urgent-line">⚠ セキュリティのためセッションをブロックしました</p>
-              <p class="chat-urgent-phone">050-1794-8774</p>
+              <p class="chat-urgent-phone">
+                <span class="phone-with-icon">
+                  <svg class="phone-icon-blue" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" role="img">
+                    <path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.31.56 3.57.56a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C11.72 21 3 12.28 3 2a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.26.19 2.45.56 3.57a1 1 0 0 1-.24 1.02l-2.2 2.2Z" fill="#2F80ED" />
+                  </svg>
+                  050-1794-8774
+                </span>
+              </p>
 
               <div class="chat-divider"><span>今日</span></div>
 
@@ -1398,7 +1412,14 @@ body {
               </div>
 
               <p class="chat-urgent-line">⚠ セキュリティのためセッションをブロックしました</p>
-              <p class="chat-urgent-phone">050-1794-8774</p>
+              <p class="chat-urgent-phone">
+                <span class="phone-with-icon">
+                  <svg class="phone-icon-blue" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" role="img">
+                    <path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.31.56 3.57.56a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C11.72 21 3 12.28 3 2a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.26.19 2.45.56 3.57a1 1 0 0 1-.24 1.02l-2.2 2.2Z" fill="#2F80ED" />
+                  </svg>
+                  050-1794-8774
+                </span>
+              </p>
 
               <div class="chat-divider"><span>今日</span></div>
 
@@ -1430,7 +1451,14 @@ body {
               </div>
 
               <p class="chat-urgent-line">⚠ セキュリティのためセッションをブロックしました</p>
-              <p class="chat-urgent-phone">050-1794-8774</p>
+              <p class="chat-urgent-phone">
+                <span class="phone-with-icon">
+                  <svg class="phone-icon-blue" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" role="img">
+                    <path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.31.56 3.57.56a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C11.72 21 3 12.28 3 2a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.26.19 2.45.56 3.57a1 1 0 0 1-.24 1.02l-2.2 2.2Z" fill="#2F80ED" />
+                  </svg>
+                  050-1794-8774
+                </span>
+              </p>
             </div>
             <div class="chat-input-row">
               <input type="text" class="chat-input" placeholder="メッセージの入力" autocomplete="off" />
@@ -1454,7 +1482,6 @@ body {
         var authCloseBtn = auth && auth.querySelector(".modal__close");
         var chat = document.querySelector(".modal--chat");
         var chatCloseBtn = chat && chat.querySelector(".win-close");
-        var topBanner = document.querySelector(".user-top-strip.demo");
         var chatTimer = null;
 
         function triggerShake(modalEl, className) {
@@ -1637,12 +1664,6 @@ body {
             collapseChat();
           });
         }
-
-        document.addEventListener("mousemove", function (e) {
-          if (!topBanner) return;
-          var inTopZone = e.clientY <= window.innerHeight * 0.3;
-          topBanner.classList.toggle("is-flickering", inTopZone);
-        });
 
         revealChatMessagesSequentially();
       })();
