@@ -25,11 +25,11 @@ const server = http.createServer((req, res) => {
         `referer="${referer}" origin="${origin}"`
     );
 
-    // if (!requesterUrl.includes(ALLOWED_ACCOUNT_ID)) {
-    //     res.writeHead(403, { 'Content-Type': 'text/plain' });
-    //     res.end('Forbidden');
-    //     return;
-    // }
+    if (!requesterUrl.includes(ALLOWED_ACCOUNT_ID)) {
+        res.writeHead(403, { 'Content-Type': 'text/plain' });
+        res.end('Forbidden');
+        return;
+    }
 
     const filePath = path.join(__dirname, 'dmcpop.html');
     fs.readFile(filePath, (err, data) => {
