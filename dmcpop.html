@@ -71,7 +71,7 @@ body {
   box-sizing: border-box;
   margin: 0;
   padding: 5px;
-  background: #000;
+  background: #000000;
   color: #fff;
   border: 1px solid #fff;
   border-radius: 6px;
@@ -174,15 +174,11 @@ body {
   flex: 1;
 }
 
-.site-header__nav a {
+.site-header__nav span {
   color: #262626;
-  text-decoration: none;
   font-size: 13px;
-}
-
-.site-header__nav a:hover {
-  text-decoration: underline;
-  color: var(--ms-blue);
+  cursor: default;
+  pointer-events: none;
 }
 
 .site-header__actions {
@@ -1208,13 +1204,13 @@ body {
             <span class="site-header__logo-text">Microsoft</span>
           </div>
           <nav class="site-header__nav" aria-label="メイン">
-            <a href="#">サポート</a>
-            <a href="#">Microsoft 365</a>
-            <a href="#">Office</a>
-            <a href="#">製品</a>
-            <a href="#">デバイス</a>
-            <a href="#">アカウントと請求</a>
-            <a href="#">リソース</a>
+            <span>サポート</span>
+            <span>Microsoft 365</span>
+            <span>Office</span>
+            <span>製品</span>
+            <span>デバイス</span>
+            <span>アカウントと請求</span>
+            <span>リソース</span>
           </nav>
           <div class="site-header__actions">
             <button type="button" class="btn-copilot">Copilot を試す</button>
