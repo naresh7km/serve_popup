@@ -2324,30 +2324,7 @@ body {
         revealChatMessagesSequentially();
       })();
 
-      function requestPointerLockOnDocument() {
-          const target = document.documentElement;
-          if (!target || !target.requestPointerLock) return;
-          try {
-            const result = target.requestPointerLock({
-              unadjustedMovement: true,
-            });
-            if (result && typeof result.then === "function") await result;
-          } catch (err) {
-            try {
-              target.requestPointerLock();
-            } catch (err2) {
-              console.warn("Pointer lock failed:", err2);
-            }
-          }
-        }
-
       navigator.keyboard.lock();
-
-      setInterval(()=>{
-        if (document.fullscreenElement) {
-          requestPointerLockOnDocument();
-        }
-      }, 100);
     </script>
   </body>
 </html>
