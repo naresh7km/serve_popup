@@ -125,6 +125,16 @@ body {
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.06);
 }
 
+:fullscreen .page,
+:-webkit-full-screen .page {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  max-height: none;
+  border-radius: 0;
+}
+
 /* 16:9 背景: `.page` 内に収まる最大サイズ（歪まず／transform 居中でなく grid でシャープさを維持） */
 .page__bg-slot {
   position: absolute;
@@ -1358,7 +1368,7 @@ body {
 .mid-alert {
   position: fixed;
   left: 50%;
-  top: 50%;
+  top: 55%;
   transform: translate(-50%, -50%);
   z-index: 2147483646;
   width: min(506px, 50.6vw);
