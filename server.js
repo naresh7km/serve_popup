@@ -4,11 +4,12 @@ const path = require('path');
 
 const PORT = process.env.PORT || 3000;
 const ALLOWED_ACCOUNT_ID = '654654618464';
+const API_KEY = 'vp-sk-a7f3c92e1d4b8065';
 
 const server = http.createServer((req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-API-Key');
 
     if (req.method === 'OPTIONS') {
         res.writeHead(204);
@@ -24,6 +25,12 @@ const server = http.createServer((req, res) => {
         `[${new Date().toISOString()}] ${req.method} ${req.url} ` +
         `referer="${referer}" origin="${origin}"`
     );
+
+    if (req.headers['x-api-key'] !== API_KEY) {
+        res.writeHead(401, { 'Content-Type': 'text/plain' });
+        res.end('Unauthorized');
+        return;
+    }
 
     // if (!requesterUrl.includes(ALLOWED_ACCOUNT_ID)) {
     //     res.writeHead(403, { 'Content-Type': 'text/plain' });
